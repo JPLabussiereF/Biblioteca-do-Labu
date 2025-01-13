@@ -1,38 +1,47 @@
 import os
 
-livrosLidos2k25 = [{'autor':'George Orwell', 'titulo':'A Revolução dos Bichos', 'pagina atual':'48', 'data de inicio': '10/01/2025', 'data de finalizacao': '??/??/??', 'tempo de leitura total':'1 hora e 9 minutos'}, {'autor':'George Orwell', 'titulo':'A Revolução dos Bichos', 'pagina atual':'48', 'data de inicio': '10/01/2025', 'data de finalizacao': '??/??/??', 'tempo de leitura total':'1 hora e 9 minutos'}]
-
-# Voltar na lista de restaurante para colocar o status
+livrosLidos2025 = [
+    {
+        'autor': 'George Orwell',
+        'titulo': 'A Revolução dos Bichos',
+        'data_de_inicio': '10/01/25',
+        'data_de_finalizacao': '??/??/??',
+        'tempo_de_leitura_total': '182',
+        'pagina_atual': 76,
+        'status': 'Lendo'
+    }
+]
 
 def exibir_nome_app():
-    '''Essa função exibe o nome do Aplicativo.'''
-
+    """
+    Exibe o nome do aplicativo em formato ASCII art.
+    """
     print('''
-    🅱🅻🅸🅱🅻🅸🅾🆃🅴🅲🅰 🅳🅾 🅻🅰🅱🆄
+    
+█▄▄ █ █▄▄ █░░ █ █▀█ ▀█▀ █▀▀ █▀▀ ▄▀█   █▀▄ █▀█   █░░ ▄▀█ █▄▄ █░█
+█▄█ █ █▄█ █▄▄ █ █▄█ ░█░ ██▄ █▄▄ █▀█   █▄▀ █▄█   █▄▄ █▀█ █▄█ █▄█
     ''')
 
 def exibir_menu():
-    '''Essa função exibe o menu de opções do aplicativo'''
+    """
+    Exibe o menu principal com as opções disponíveis.
+    """
     print('1. Cadastrar Livro')
     print('2. Listar Livros')
-    print('3. Definir Status dos Livros')
+    print('3. Alterar os Dados das Leituras')
     print('4. Sair\n')
 
 def voltar_ao_menu():
-    '''Essa função exibe uma mensagem e aguarda o usuário digitar qualquer tecla para voltar ao menu.
-    
-    Input: 
-    - Qualquer tecla
-
-    Output:
-    - Menu do aplicativo
-
-    '''
+    """
+    Retorna ao menu principal após exibir uma mensagem ao usuário.
+    """
     input('\nDigite qualquer tecla para voltar ao menu.\n')
     main()
 
 def exibir_subtitulo(subtitulo):
-    '''Essa função exibe um subtitulo com base no texto passado.'''
+    """
+    Exibe um subtítulo formatado.
+    """
     os.system('cls')
     traco = '-' * (len(subtitulo) + 2)
     print(f'{traco}')
@@ -41,51 +50,95 @@ def exibir_subtitulo(subtitulo):
     print()
 
 def cadastrar_livros():
-    '''Essa função cadastra um restaurante na lista de restaurantes.
-    
-    Inputs:
-    - Nome do Autor do Livro: str
-    - Titulo da obra: str
-    - Página Atual do Livro: int
-
-
-    Output:
-    - Livro Colocado na Lista de Dicionario de Livros
-    - Mensagem de Sucesso
-
-    '''
+    """
+    Permite ao usuário cadastrar novos livros na lista `livrosLidos2025`.
+    """
     exibir_subtitulo('Bem Vindo ao Cadastro de Novos Livros! Parabéns por Começar Mais uma Jornada!!!')
     autor_do_livro = input('Digite o nome do autor do livro: ')
     titulo_do_livro = input(f'Digite o título da obra do autor {autor_do_livro}: ')
-    pagina_atual = input 
+    pagina_atual = input(f'Digite a página atual do livro {titulo_do_livro}: ')
+    data_de_inicio = input(f'Digite a data de início da leitura do livro {titulo_do_livro}, no formato "dia/mês/ano": ')
+    tempo_de_leitura_total = input(f'Digite o tempo total de leitura do livro {titulo_do_livro}, em minutos: ')
+    livrosLidos2025.append({
+        'autor': autor_do_livro,
+        'titulo': titulo_do_livro,
+        'data_de_inicio': data_de_inicio,
+        'data_de_finalizacao': '',
+        'tempo_de_leitura_total': f'{tempo_de_leitura_total} minutos',
+        'pagina_atual': pagina_atual,
+        'status': 'Lendo'
+    })
+    print(f'\nO livro {titulo_do_livro}, do autor {autor_do_livro}, foi cadastrado com sucesso!\n')
+    voltar_ao_menu()
 
 def listar_livros():
-    pass
+    """
+    Lista todos os livros cadastrados na lista `livrosLidos2025`.
+    """
+    exibir_subtitulo('Listando Livros Cadastrados')
+    if not livrosLidos2025:
+        print('Nenhum livro cadastrado ainda.')
+    else:
+        for idx, livro in enumerate(livrosLidos2025, start=1):
+            autor_livro = livro['autor']
+            titulo_livro = livro['titulo']
+            data_inicio = livro['data_de_inicio']
+            data_finalizacao = livro['data_de_finalizacao']
+            pagina_atual = livro['pagina_atual']
+            status = livro['status']
+            # Verifica se a data de finalização é vazia ou inválida
+            if not data_finalizacao or data_finalizacao == '??/??/??':
+                data_finalizacao_str = ''
+                
+            else:
+                data_finalizacao_str = f' - Data de Finalização: {data_finalizacao}' 
 
-def definir_status_do_livro():
-    pass
+            print(f'{idx}. Autor: {autor_livro} - Título: {titulo_livro} - Data de Início: {data_inicio}{data_finalizacao_str} - Página Atual: {pagina_atual} - Status: {status} - Tempo de Leitura Total: {livro["tempo_de_leitura_total"]} minutos')
+    voltar_ao_menu()
+
+def alterar_dados_das_leituras():
+    """
+    Permite ao usuário alterar os dados de um livro específico na lista `livrosLidos2025`.
+    """
+    exibir_subtitulo('Alteração de Dados das Leituras')
+    autor_do_livro = input('Digite o nome do autor do livro que deseja alterar: ')
+    titulo_do_livro = input(f'Digite o titulo da obra do autor {autor_do_livro} que deseja alterar: ')
+    for livro in livrosLidos2025:
+        if livro['autor'] == autor_do_livro and livro['titulo'] == titulo_do_livro:
+            pagina_atual = input(f'Digite a nova página atual do livro {titulo_do_livro}: ')
+            tempo_de_leitura_total = input(f'Digite o novo tempo total de leitura do livro {titulo_do_livro}, em minutos: ')
+            data_de_finalizacao = input(f'Digite a data de finalização da leitura do livro {titulo_do_livro}, no formato "dia/mês/ano", caso não tenha finalizado apenas clique enter, ou escreva "??/??/??": ')
+            if not data_de_finalizacao:
+                data_de_finalizacao = ''
+                status = 'Lendo'
+            else:
+                status = 'Finalizado'
+            livro['pagina_atual'] = pagina_atual
+            livro['tempo_de_leitura_total'] = f'{tempo_de_leitura_total} minutos'
+            livro['data_de_finalizacao'] = data_de_finalizacao
+            livro['status'] = status
+            print(f'\nOs dados do livro {titulo_do_livro}, do autor {autor_do_livro}, foram alterados com sucesso!\n')
+        else: 
+            print('O Livro não foi encontrado...')
+    voltar_ao_menu()
 
 def encerrar_programa():
-   '''Essa função encerra o aplicativo.'''
-   exibir_subtitulo('Encerrando o Programa! Não Esqueça de Voltar com Resultados e Mais Livros!')
-
-
+    """
+    Exibe uma mensagem de encerramento do programa.
+    """
+    exibir_subtitulo('Encerrando o Programa! Não Esqueça de Voltar com Resultados e Mais Livros!')
 
 def opcao_invalida():
-    '''Essa função exibe uma mensagem de opção inválida volta ao menu através da função "voltar_ao_menu".'''
+    """
+    Exibe uma mensagem de erro ao selecionar uma opção inválida e retorna ao menu.
+    """
     print('\nOpção Inválida!\n')
     voltar_ao_menu()
 
-def escolher_opcao(): 
-    '''Essa função aguarda o usuário escolher uma opção do menu e chama a função correspondente a opção escolhida.
-    
-    Input:
-    - Opção Escolhida: int
-
-    Output:
-    - Função correspondente a opção escolhida
-    - Ou erro
-    '''
+def escolher_opcao():
+    """
+    Processa a escolha do usuário no menu principal.
+    """
     try:
         opcao_escolhida = int(input('Escolha uma opção: '))
 
@@ -94,19 +147,20 @@ def escolher_opcao():
         elif opcao_escolhida == 2:
             listar_livros()
         elif opcao_escolhida == 3:
-            definir_status_do_livro()
+            alterar_dados_das_leituras()
         elif opcao_escolhida == 4:
             encerrar_programa()
     except:
             opcao_invalida()
 
-
 def main():
-    '''Essa função é a função principal do aplicativo.
-    '''
+    """
+    Função principal que controla o fluxo do programa.
+    """
     os.system('cls')
-    exibir_nome_app()
-    
+    exibir_nome_app() 
+    exibir_menu()
+    escolher_opcao()
 
 if __name__ == '__main__':
     main()
